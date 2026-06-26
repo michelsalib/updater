@@ -1,0 +1,5 @@
+HP Usage of source code from NETStandard:
+    HP Image Assistant uses unmodified library code from NETStandard.
+	
+License of the unmodified open source NETStandard code:
+    The unmodified source code retains the license for NETStandard. The original license file LICENSE.txt renamed as NETStandard_License.txt can be found in the same location with this file.	

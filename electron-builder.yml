@@ -1,0 +1,40 @@
+appId: fr.matchem.weeklyupdatechecker
+productName: Weekly Update Checker
+directories:
+  buildResources: build
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{biome.json,dev-app-update.yml,CLAUDE.md,README.md}'
+  - '!scripts/*'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+  # HPIA + SDIO are shipped via extraResources (below), outside the asar so their
+  # exes are executable; keep them out of the asar to avoid duplicating ~37 MB.
+  - '!resources/hpia/**'
+  - '!resources/sdio/**'
+# Driver tools, copied verbatim into <app>/resources so their exes (+ sibling files)
+# can be launched from disk. Resolved at runtime in updates/hp.ts and updates/refresh.ts.
+extraResources:
+  - from: resources/hpia
+    to: hpia
+  - from: resources/sdio
+    to: sdio
+win:
+  executableName: weekly-update-checker
+  target:
+    - nsis
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+  oneClick: false
+  perMachine: false
+npmRebuild: false
+publish:
+  provider: github
+  owner: michelsalib
+  repo: updater
+  releaseType: release

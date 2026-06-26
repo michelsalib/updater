@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" class="wa-dark wa-theme-default">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self' data:; script-src 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weekly Update Checker</title>
+  </head>
+  <body class="h-full">
+    <div class="flex h-screen flex-col">
+      <!-- Header -->
+      <header class="flex items-center justify-between px-5 py-3.5 border-b border-white/10">
+        <div class="flex items-center gap-3">
+          <div
+            class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-[#7aa2f7] to-[#5478d8] text-lg shadow-lg shadow-[#7aa2f7]/20"
+          >
+            ⟳
+          </div>
+          <div>
+            <h1 class="text-[15px] font-semibold leading-tight">Weekly Update Checker</h1>
+            <div id="subtitle" class="text-xs text-white/45">winget · WSL apt</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <wa-button id="update-ready" variant="success" size="small" class="hidden">
+            Restart to update
+          </wa-button>
+          <wa-button id="rescan" appearance="outlined" size="small">Check for updates</wa-button>
+        </div>
+      </header>
+
+      <!-- Scrollable body (content capped + centered so versions stay near names) -->
+      <main class="flex-1 overflow-y-auto">
+        <div class="mx-auto w-full max-w-3xl px-5 py-4 space-y-3">
+          <!-- Scheduler (compact bar) -->
+          <div
+            class="glass flex items-center justify-between gap-4 rounded-xl px-4 py-2.5"
+          >
+            <div class="min-w-0">
+              <div class="text-sm font-semibold">Weekly schedule</div>
+              <div id="sched-status" class="text-xs text-white/55">Checking…</div>
+              <div id="sched-detail" class="text-[11px] text-white/40"></div>
+            </div>
+            <wa-switch id="sched-switch" disabled></wa-switch>
+          </div>
+
+          <!-- Errors -->
+          <div id="errors" class="space-y-2"></div>
+
+          <!-- Update groups -->
+          <div id="content">
+            <div id="loading" class="flex flex-col items-center gap-3 py-16 text-white/55">
+              <wa-spinner style="font-size: 2rem"></wa-spinner>
+              <span class="text-sm">Scanning for updates…</span>
+            </div>
+
+            <div id="list-wrap" class="hidden space-y-2.5">
+              <label
+                class="flex cursor-pointer items-center gap-2.5 px-1 text-sm font-medium text-white/80"
+              >
+                <wa-checkbox id="check-all" checked></wa-checkbox>
+                <span id="summary">updates</span>
+              </label>
+              <div id="groups" class="space-y-2.5 stagger"></div>
+            </div>
+
+            <div id="empty" class="hidden flex-col items-center gap-2 py-16 text-center">
+              <div class="text-4xl">✓</div>
+              <div class="text-sm font-medium text-emerald-300/90">You're all up to date</div>
+              <div class="text-xs text-white/40">No winget or apt upgrades available.</div>
+            </div>
+          </div>
+
+          <!-- Run progress -->
+          <div id="progress" class="hidden space-y-2.5"></div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="border-t border-white/10">
+        <div class="mx-auto flex w-full max-w-3xl items-center justify-between gap-4 px-5 py-3">
+          <div id="footer-msg" class="min-w-0 truncate text-xs text-white/50"></div>
+          <div class="flex items-center gap-2">
+            <wa-button id="back" appearance="outlined" size="small" class="hidden">
+              Back to list
+            </wa-button>
+            <wa-button id="run" variant="brand" disabled>Run selected</wa-button>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="./ui/main.ts"></script>
+  </body>
+</html>

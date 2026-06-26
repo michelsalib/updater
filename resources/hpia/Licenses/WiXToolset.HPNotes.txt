@@ -1,0 +1,18 @@
+HP Usage of the WiX Toolset:
+    HP Image Assistant uses a modified version of the WiX Toolset version 3.7. The source code to the modified WiX Toolset is available at
+    ftp://ftp.hp.com/pub/caps-softpaq/cmit/opensource/sp65997.exe
+
+License of the modified source code:
+    The modified source code retains the license of the original WiX Toolset. The original license file LICENSE.TXT can be found in the same location with this file.
+
+Description of the HP modification:
+    The enhancement being added is to the ArchiveFileStreamContext class in ArchiveFileStreamContext.cs located in src/DTF/Libraries/Compression, and is part of the Microsoft.Deployment.Compression.dll assembly. A new property, CustomOffsetValue, is added to the class. The functions OpenArchiveReadStream and OpenArchiveWriteStream will make use of the field.
+
+    Original program flow:
+        If enableOffsetOption is true, use the built-in offset searcher to determine the offset.
+
+    HP modified program flow:
+        If enableOffsetOption is true, check to see if CustomOffsetValue is greater than 0.
+        If it is greater than 0, use the value in CustomOffsetValue as the offset for the stream.
+        Else, use the built-in offset searcher.
+

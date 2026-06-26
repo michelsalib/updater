@@ -1,0 +1,5 @@
+HP Usage of source code from Z.ExtensionMethods:
+    HP Image Assistant uses unmodified library code from Z.ExtensionMethods.
+	
+License of the unmodified open source Z.ExtensionMethods code:
+    The unmodified source code retains the license for Z.ExtensionMethods. The original license file LICENSE renamed as Z.ExtensionMethods_License.txt can be found in the same location with this file.	

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <radialGradient id="purpleGlow" cx="80" cy="80" r="1100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7c4dff" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#7c4dff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cyanGlow" cx="944" cy="944" r="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="80" y="80" width="864" height="864" rx="220" ry="220" fill="#0e0b1a"/>
+  <rect x="80" y="80" width="864" height="864" rx="220" ry="220" fill="url(#purpleGlow)"/>
+  <rect x="80" y="80" width="864" height="864" rx="220" ry="220" fill="url(#cyanGlow)"/>
+
+  <g fill="#f1f5f9" stroke="#f1f5f9" stroke-width="90" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 277.1 426.5 A 250 250 0 0 1 746.9 426.5" fill="none"/>
+    <path d="M 746.9 597.5 A 250 250 0 0 1 277.1 597.5" fill="none"/>
+    <path d="M 784.5 529.9 L 662.4 457.3 L 831.5 395.7 Z" stroke-width="24"/>
+    <path d="M 239.5 494.1 L 361.6 566.7 L 192.5 628.3 Z" stroke-width="24"/>
+  </g>
+</svg>

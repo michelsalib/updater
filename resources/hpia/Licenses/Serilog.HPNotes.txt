@@ -1,0 +1,5 @@
+HP Usage of source code from Serilog:
+    HP Image Assistant uses unmodified library code from Serilog.
+	
+License of the unmodified open source Serilog code:
+    The unmodified source code retains the license for Serilog. The original license file LICENSE renamed as Serilog_License.txt can be found in the same location with this file.	

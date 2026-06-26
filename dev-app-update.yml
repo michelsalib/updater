@@ -1,0 +1,4 @@
+provider: github
+owner: michelsalib
+repo: updater
+updaterCacheDirName: weekly-update-checker-updater

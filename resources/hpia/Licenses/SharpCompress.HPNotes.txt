@@ -1,0 +1,5 @@
+HP Usage of source code from SharpCompress:
+    HP Image Assistant uses unmodified library code from SharpCompress.
+	
+License of the unmodified open source dotnet.runtime code:
+    The unmodified source code retains the license for dotnet.runtime. The original license file LICENSE.txt renamed as SharpCompress_License.txt can be found in the same location with this file.	

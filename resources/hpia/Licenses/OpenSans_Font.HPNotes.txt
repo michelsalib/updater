@@ -1,0 +1,5 @@
+HP Usage of Google Fonts Open Sans
+    HP Image Assistant uses an unmodified version of the Open Sans TrueType font resources.
+	
+License of the unmodified open source DLL:
+    The unmodified library retains the license for Google Fonts Open Sans. The original license file LICENSE.TXT renamed as OpenSans_License.txt can be found in the same location with this file.

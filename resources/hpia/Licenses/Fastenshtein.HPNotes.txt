@@ -1,0 +1,5 @@
+HP Usage of source code from Fastenshtein:
+    HP Image Assistant uses unmodified library code from Fastenshtein.
+	
+License of the unmodified open source Fastenshtein code:
+    The unmodified source code retains the license for Fastenshtein. The original license file LICENSE renamed as Fastenshtein_License.txt can be found in the same location with this file.	

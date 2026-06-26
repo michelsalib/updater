@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/* Web Awesome framework + theme are imported as JS modules in main.ts so the
+   bundler controls their order (avoids @import-ordering warnings). */
+
+:root {
+  --accent: #7aa2f7;
+  --winget: #4a8cf7;
+  --apt: #e0a458;
+  --hp: #0096d6;
+  --wu: #a78bfa;
+  --sdi: #34d399;
+}
+
+/* Layout containers use plain .glass divs (full padding control); Web Awesome
+   is kept for interactive controls. Keep WA callouts aligned with our surfaces. */
+wa-callout {
+  --wa-color-surface-raised: transparent;
+}
+
+/* Compact Web Awesome checkboxes in the dense list. */
+wa-checkbox {
+  --size: 1.1rem;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(122, 162, 247, 0.12), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(224, 164, 88, 0.1), transparent 60%), #0f1115;
+  color: #e6e6f0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+/* Subtle entrance for list items + cards. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  animation: rise 0.32s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Stagger successive rows for a cascading reveal. */
+.stagger > * {
+  animation: rise 0.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.stagger > *:nth-child(1) {
+  animation-delay: 0.02s;
+}
+.stagger > *:nth-child(2) {
+  animation-delay: 0.05s;
+}
+.stagger > *:nth-child(3) {
+  animation-delay: 0.08s;
+}
+.stagger > *:nth-child(4) {
+  animation-delay: 0.11s;
+}
+.stagger > *:nth-child(5) {
+  animation-delay: 0.14s;
+}
+.stagger > *:nth-child(n + 6) {
+  animation-delay: 0.16s;
+}
+
+/* Collapsible group body: animate grid-template-rows 1fr→0fr (height-agnostic).
+   The inner child needs overflow:hidden + min-height:0 to clip during collapse. */
+.collapsible {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.13s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.collapsible.collapsed {
+  grid-template-rows: 0fr;
+}
+.collapsible > * {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.glass {
+  background: rgba(30, 33, 48, 0.66);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(122, 162, 247, 0.14);
+}
+
+.src-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex: none;
+}
+.src-dot.winget {
+  background: var(--winget);
+  box-shadow: 0 0 10px rgba(74, 140, 247, 0.7);
+}
+.src-dot.apt {
+  background: var(--apt);
+  box-shadow: 0 0 10px rgba(224, 164, 88, 0.7);
+}
+.src-dot.hp {
+  background: var(--hp);
+  box-shadow: 0 0 10px rgba(0, 150, 214, 0.7);
+}
+.src-dot.wu {
+  background: var(--wu);
+  box-shadow: 0 0 10px rgba(167, 139, 250, 0.7);
+}
+.src-dot.sdi {
+  background: var(--sdi);
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.7);
+}
+
+.log {
+  font-family: "Cascadia Code", ui-monospace, "Consolas", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Thin custom scrollbars in the dark theme. */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(122, 162, 247, 0.25);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(122, 162, 247, 0.45);
+  background-clip: content-box;
+}
