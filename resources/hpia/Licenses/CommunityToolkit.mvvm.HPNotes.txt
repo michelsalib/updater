@@ -1,5 +1,0 @@
-HP Usage of source code from CommunityToolkit.mvvm:
-    HP Image Assistant uses unmodified library code from CommunityToolkit.mvvm.
-	
-License of the unmodified open source CommunityToolkit.mvvm code:
-    The unmodified source code retains the license for CommunityToolkit.mvvm. The original license file LICENSE renamed as CommonServiceLocator_License.txt can be found in the same location with this file.	

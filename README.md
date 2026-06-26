@@ -94,11 +94,12 @@ Shared types live in a deliberately **node-free** [src/main/updates/types.ts](sr
 
 ## 🛠️ Getting started
 
-> **Prerequisites:** Windows 10/11, Node.js ≥ 20. WSL is optional (apt checks are skipped if absent).
+> **Prerequisites:** Windows 10/11, Node.js ≥ 20, and network access on first build (to fetch the bundled vendor tools — see below). WSL is optional (apt checks are skipped if absent).
 
 ```bash
 npm install
-npm run dev          # electron-vite dev server with HMR for all three processes
+npm run fetch:resources   # download HPIA + SDIO into resources/ (needed for HP/driver checks in dev)
+npm run dev               # electron-vite dev server with HMR for all three processes
 ```
 
 ### Common commands
@@ -111,8 +112,13 @@ npm run dev          # electron-vite dev server with HMR for all three processes
 | `npm run build` | Typecheck, then `electron-vite build` |
 | `npm run build:win` | Build, then package an NSIS installer with electron-builder |
 | `npm run build:icons` | Regenerate PNG/ICO icons from [build/icon.svg](build/icon.svg) |
+| `npm run fetch:resources` | Download the bundled vendor driver tools into `resources/` |
 
 > `build` aborts on any typecheck error. There are no tests.
+
+### Bundled vendor tools
+
+The HP and driver checks ship two third-party tools — **HP Image Assistant** and **Snappy Driver Installer Origin** — that are too large for version control, so `resources/` is **git-ignored**. They're fetched on demand by [scripts/fetch-resources.mjs](scripts/fetch-resources.mjs), which runs automatically as a `prebuild` step (so `npm run build` / `build:win` self-populate) and can be run on its own with `npm run fetch:resources`. The fetch is **idempotent** — already-present tools are skipped; pass `--force` to re-download. The first build therefore needs network access; subsequent builds are offline. The pinned versions and download URLs live at the top of that script.
 
 ### Code style
 
@@ -120,7 +126,7 @@ Formatting and linting are handled by **[Biome](https://biomejs.dev)** (not ESLi
 
 ## 📦 Packaging & auto-update
 
-Packaged as a per-user **NSIS installer** via electron-builder ([electron-builder.yml](electron-builder.yml)). Once installed, the app updates itself: electron-updater pulls releases from GitHub, and on `update-downloaded` the UI surfaces a **Restart to update** button that triggers `quitAndInstall()`.
+Packaged as a per-user **NSIS installer** via electron-builder ([electron-builder.yml](electron-builder.yml)). The HPIA and SDIO tools are copied into the app as `extraResources` (outside the asar so their executables stay runnable) — `npm run build:win` fetches them first if they aren't already present. Once installed, the app updates itself: electron-updater pulls releases from GitHub, and on `update-downloaded` the UI surfaces a **Restart to update** button that triggers `quitAndInstall()`.
 
 ## 🧰 Tech stack
 

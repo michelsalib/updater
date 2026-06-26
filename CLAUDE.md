@@ -7,12 +7,13 @@ Windows-only Electron app that checks for **winget** and **WSL apt** updates on 
 ## Commands
 
 ```bash
-npm run dev          # electron-vite dev (HMR for main/preload/renderer)
-npm run typecheck    # tsc --noEmit for both projects (node + web)
-npm run check        # biome check --write (lint + format)
-npm run build:icons  # regenerate build/icon.{png,ico} + resources/icon.png from build/icon.svg
-npm run build        # typecheck → electron-vite build
-npm run build:win    # build → electron-builder --win (NSIS installer)
+npm run dev              # electron-vite dev (HMR for main/preload/renderer)
+npm run typecheck        # tsc --noEmit for both projects (node + web)
+npm run check            # biome check --write (lint + format)
+npm run build:icons      # regenerate build/icon.{png,ico} + resources/icon.png from build/icon.svg
+npm run fetch:resources  # download HPIA + SDIO vendor tools into resources/ (idempotent; --force to re-fetch)
+npm run build            # prebuild (fetch:resources) → typecheck → electron-vite build
+npm run build:win        # build → electron-builder --win (NSIS installer)
 ```
 
 No tests. `build` aborts on typecheck failure. Biome (not ESLint/Prettier) — single quotes, no semicolons, no trailing commas, 100-col, 2-space; see [biome.json](biome.json). TS root is references-only; edit [tsconfig.node.json](tsconfig.node.json) (main + preload) or [tsconfig.web.json](tsconfig.web.json) (renderer).
@@ -74,6 +75,10 @@ Package ids are validated against `WINGET_ID` / `APT_NAME` regexes before interp
 - WA component scripts are imported individually from `dist/components/<name>/<name>.js` to keep the bundle lean. WA components are web components (Shadow DOM): Tailwind classes style light-DOM layout; theme tokens / `::part()` style internals.
 - `<html class="wa-dark wa-theme-default">` enables the dark theme.
 - `<wa-icon>` is avoided (needs a network/asset base path) — emoji/Unicode used instead, so the app stays fully **offline**. The renderer CSP in [index.html](src/renderer/index.html) is locked to `'self'`.
+
+## Bundled vendor tools (`resources/`)
+
+`resources/` is **git-ignored** — it holds large third-party binaries that are fetched, not committed: HP Image Assistant (`resources/hpia/`) and Snappy Driver Installer Origin (`resources/sdio/`), plus the generated `icon.png`. [scripts/fetch-resources.mjs](scripts/fetch-resources.mjs) downloads + extracts the two tools (pinned versions/URLs at the top of the file) into `resources/`; it's wired as the `prebuild` npm hook, so `npm run build` (and thus `build:win`) self-populate. Idempotent (skips a tool whose marker file exists; `--force` re-downloads), Windows-only, no new npm deps (HPIA self-extracts via its `.exe`; SDIO unzips via `Expand-Archive`). electron-builder then ships `hpia`/`sdio` as `extraResources` (outside the asar, so the exes stay runnable). To upgrade a tool, bump its entry in the script. Run `npm run fetch:resources` once after a fresh clone to populate them for `dev`.
 
 ## Auto-update & packaging
 

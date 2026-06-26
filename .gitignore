@@ -4,3 +4,7 @@ release/
 dist/
 *.log
 .DS_Store
+
+# Generated/fetched at build time — populated by `npm run fetch:resources`
+# (HPIA + SDIO vendor tools) and `npm run build:icons` (icon.png).
+resources/
