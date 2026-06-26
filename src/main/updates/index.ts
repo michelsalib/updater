@@ -39,10 +39,16 @@ export async function checkAll(handlers?: CheckHandlers): Promise<CheckSummary> 
     handlers?.onResult?.(r)
   }
 
+  // HP updates apply only to genuine HP hardware. On any other machine the source
+  // isn't applicable, so skip it entirely — otherwise checkHp() returns an empty
+  // result the UI renders as a spurious "HP · drivers & firmware — up to date"
+  // row on non-HP PCs. isHpMachine() is cached and reused by checkHp below.
+  const hp = await isHpMachine()
+
   if (handlers?.onStart) {
     // Enumerate the slow/optional sources up front so the UI knows what to wait
-    // for. listDistros is cheap; isHpMachine is cached and reused by checkHp.
-    const [distros, hp] = await Promise.all([listDistros(), isHpMachine()])
+    // for. listDistros is cheap.
+    const distros = await listDistros()
     handlers.onStart([
       'winget',
       'wu',
@@ -55,7 +61,7 @@ export async function checkAll(handlers?: CheckHandlers): Promise<CheckSummary> 
   await Promise.all([
     checkWinget().then(collect),
     checkWindowsUpdate().then(collect),
-    checkHp().then(collect),
+    ...(hp ? [checkHp().then(collect)] : []),
     checkSdi().then(collect),
     checkAllApt().then((rs) => {
       for (const r of rs) collect(r)
