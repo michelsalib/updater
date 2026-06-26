@@ -1,6 +1,6 @@
 {
   "name": "weekly-update-checker",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Weekly checker for winget and WSL apt updates",
   "main": "./out/main/index.js",
   "author": "m.salib",
